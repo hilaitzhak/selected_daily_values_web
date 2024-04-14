@@ -2,11 +2,17 @@ import { useEffect, useState } from 'react';
 import './header.css';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import Loading from '../loading/loading';
 
-function AppHeader() {
+interface AppHeaderProps {
+    darkMode: boolean;
+    toggleDarkMode: () => void;
+}
+
+function AppHeader({ darkMode, toggleDarkMode }: AppHeaderProps) {
     const { month, day } = useParams<{ month: string; day: string }>();
     const [loading, setLoading] = useState<boolean>(true);
-
+    
     useEffect(() => {
         console.log(month, day);
         fetchTitle();
@@ -34,9 +40,14 @@ function AppHeader() {
 
     return (
         <div className="app-header-wrapper">
+            <div className="checkbox">
+                <input id="cbx" type="checkbox" onClick={toggleDarkMode}/>
+                <label className="toggle" htmlFor="cbx"><span></span></label>
+            </div>
             <h1 className="app-title">
-                {loading ? 'Loading...' : 
-                <a href={`https://en.m.wikipedia.org/wiki/${getTitleLink(month, day)}`} target="_blank" rel="noopener noreferrer">{getTitleLink(month, day)}</a>}
+                {loading ? <Loading/> : 
+                <a href={`https://en.m.wikipedia.org/wiki/${getTitleLink(month, day)}`} target="_blank" rel="noopener noreferrer">{`${day}/${month}`}</a>
+                }
             </h1>
         </div>
     );

@@ -1,24 +1,19 @@
 import { createGlobalStyle } from 'styled-components';
 
-interface Theme {
-  body: string;
-  text: string;
-}
+export const lightTheme = {
+  body: '#FFF',
+  text: '#363537',
+};
 
-export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
+export const darkTheme = {
+  body: '#363537',
+  text: '#FAFAFA',
+};
+
+export const GlobalStyles = createGlobalStyle`
   body {
-    background: ${({ theme }) => theme.body};
+    background-color: ${({ theme }) => theme.body};
     color: ${({ theme }) => theme.text};
-    transition: background 0.2s ease-in, color 0.2s ease-in;
+    transition: all 0.25s linear;
   }
 `;
-
-export const lightTheme: Theme = {
-  body: '#f1f1f1',
-  text: '#121620'
-};
-
-export const darkTheme: Theme = {
-  body: '#121620',
-  text: '#f1f1f1'
-};
