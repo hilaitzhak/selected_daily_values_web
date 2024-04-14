@@ -11,7 +11,8 @@ export class AppController {
             const { month, day } = req.params;
             const wiki_api = `https://api.wikimedia.org/feed/v1/wikipedia/en/onthisday/selected/${month}/${day}`;
             const response = await axios.get(wiki_api);
-            res.json(response.data);
+            console.log(response.data.selected);
+            res.json(response.data.selected);
         } catch (error) {
             console.error('Error fetching data from Wikipedia API:', error);
             res.status(500).json({ error: 'Internal Server Error' });

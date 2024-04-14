@@ -35,7 +35,7 @@ export class AppServer {
 
     // Start listening for incoming requests
     public listen() {
-        const PORT = process.env.PORT || 5000;
+        const PORT = process.env.PORT || 3001;
         this.app.listen(PORT, () => {
           console.log(`Server is running on port ${PORT}!`);
         });

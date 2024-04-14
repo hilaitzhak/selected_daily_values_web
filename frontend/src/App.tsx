@@ -1,13 +1,17 @@
 import React from 'react';
 import './App.css';
-import AppHeader from './components/header/AppHeader';
+import AppHeader from './components/header/header';
+import { Route,  BrowserRouter as Router, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="app-wrapper">
-      <AppHeader/>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/onthisday/:month/:day" element={<AppHeader />} />
+      </Routes>
+    </Router>
   );
 }
 
 export default App;
+
