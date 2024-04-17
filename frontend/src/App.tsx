@@ -4,6 +4,7 @@ import AppHeader from './components/header/header';
 import { Route,  BrowserRouter as Router, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles, darkTheme, lightTheme } from './components/theme';
+import Content from './components/content/content';
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -17,7 +18,15 @@ function App() {
           <GlobalStyles/>
             <Router>
               <Routes>
-                <Route path="/onthisday/:month/:day" element={<AppHeader darkMode={isDarkTheme} toggleDarkMode={toggleTheme}/>} />
+                <Route
+                  path="/onthisday/:month/:day" 
+                  element={
+                    <>
+                      <AppHeader darkMode={isDarkTheme} toggleDarkMode={toggleTheme}/>
+                      <Content/>
+                    </>
+                  }
+                />
               </Routes>
             </Router>
         </>

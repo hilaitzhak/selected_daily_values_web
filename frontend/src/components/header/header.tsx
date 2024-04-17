@@ -1,30 +1,31 @@
 import { useEffect, useState } from 'react';
 import './header.css';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import Loading from '../loading/loading';
+import { dataService } from '../../services/service';
 
-interface AppHeaderProps {
+export interface AppProps {
     darkMode: boolean;
     toggleDarkMode: () => void;
 }
 
-function AppHeader({ darkMode, toggleDarkMode }: AppHeaderProps) {
-    const { month, day } = useParams<{ month: string; day: string }>();
+function AppHeader({ darkMode, toggleDarkMode }: AppProps) {
+    const { month = '', day = '' } = useParams<{ month: string | undefined; day: string }>();
     const [loading, setLoading] = useState<boolean>(true);
     
     useEffect(() => {
-        console.log(month, day);
-        fetchTitle();
+        onMount();
     }, []);
 
-    const fetchTitle = async () => {
+    const onMount = async () => {
+
         try {
-            const response = await axios.get(`http://localhost:3001/onthisday/${month}/${day}`);
-            console.log(response);
+            const data_service = new dataService();
+            const data  = await data_service.getAllData(month, day);
+            console.log(data, 'header');
             setLoading(false);
+            return data;
         } catch (error) {
-            console.log('Error fetching title from server.');
+            console.error('Error fetching data service:', error);
             setLoading(false);
         }
     }
@@ -45,7 +46,7 @@ function AppHeader({ darkMode, toggleDarkMode }: AppHeaderProps) {
                 <label className="toggle" htmlFor="cbx"><span></span></label>
             </div>
             <h1 className="app-title">
-                {loading ? <Loading/> : 
+                {loading ? 'Loading...' : 
                 <a href={`https://en.m.wikipedia.org/wiki/${getTitleLink(month, day)}`} target="_blank" rel="noopener noreferrer">{`${day}/${month}`}</a>
                 }
             </h1>
