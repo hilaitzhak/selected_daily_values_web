@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import './App.css';
-import AppHeader from './components/header/header';
 import { Route,  BrowserRouter as Router, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles, darkTheme, lightTheme } from './components/theme';
-import Content from './components/content/content';
+import Main from './components/main/main';
 
 function App() {
-  const [theme, setTheme] = useState("light");
-  const isDarkTheme = theme === "dark";
-  const toggleTheme = () => setTheme(isDarkTheme ? "light" : "dark");
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const  toggleTheme = (event: any) => {
+    setIsDarkTheme(event?.target?.checked)
+  }
 
   return (
     <div className='app-wrapper'>
@@ -18,22 +18,13 @@ function App() {
           <GlobalStyles/>
             <Router>
               <Routes>
-                <Route
-                  path="/onthisday/:month/:day" 
-                  element={
-                    <>
-                      <AppHeader darkMode={isDarkTheme} toggleDarkMode={toggleTheme}/>
-                      <Content/>
-                    </>
-                  }
-                />
+                <Route path="/onthisday/:month/:day"  element={<Main toggleDarkMode={toggleTheme}/>}/>
+                <Route path="*"  element={<Main toggleDarkMode={toggleTheme}/>}/>
               </Routes>
             </Router>
         </>
       </ThemeProvider>
     </div>
-
-
   );
 }
 

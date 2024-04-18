@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { AppController } from "../controllers/app-controller";
+import { EventsController } from "../controllers/events-controller";
 
 export class AppRouter {
     private router: Router;
-    private app_controller: AppController;
+    private events_controller: EventsController;
     
     constructor() {
         this.init();
@@ -20,11 +20,11 @@ export class AppRouter {
     }
 
     private setController() {
-        this.app_controller = new AppController();
+        this.events_controller = new EventsController();
     }
 
     private setRoutes() {
-        this.router.get('/onthisday/:month/:day', this.app_controller.getTitle.bind(this.app_controller));
+        this.router.get('/onthisday/:month/:day', this.events_controller.getThisDayEvents.bind(this.events_controller));
     }
 
     public getRouter(): Router {
